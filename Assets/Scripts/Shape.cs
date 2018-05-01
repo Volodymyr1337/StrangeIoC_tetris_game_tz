@@ -1,4 +1,4 @@
-﻿public enum Shapes
+﻿public enum Shape
 {
     I,
     J,

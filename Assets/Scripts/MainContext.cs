@@ -10,25 +10,24 @@ using strange.framework.api;
 
 public class MainContext : MVCSContext
 {
-
+    
     public MainContext(MonoBehaviour view) : base (view) { }
-
+    
     protected override void mapBindings()
     {
-
-        foreach (Shapes shape in Enum.GetValues(typeof(Shapes)))
+        foreach (Shape shape in Enum.GetValues(typeof(Shape)))
         {
             injectionBinder.Bind<IPool<GameObject>>().To<Pool<GameObject>>().ToSingleton().ToName(shape);
         }
-            
         
-
         mediationBinder.Bind<PlaygroundView>().To<PlaygroundMediator>();
+
+        commandBinder.Bind(PlaygroundEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
     }
 
     protected override void postBindings()
     {
-        foreach (Shapes shape in Enum.GetValues(typeof(Shapes)))
+        foreach (Shape shape in Enum.GetValues(typeof(Shape)))
         {
             IPool<GameObject> shapesPool = injectionBinder.GetInstance<IPool<GameObject>>(shape);
             shapesPool.instanceProvider = new ResourceInstanceProvider($"Shapes/{shape}", LayerMask.NameToLayer("Figure"));

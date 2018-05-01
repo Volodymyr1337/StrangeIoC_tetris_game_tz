@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
-using UnityEngine;
 
 public class PlaygroundView : View
 {
-
-    [SerializeField] private GameObject tempPrefab;
+    
     private bool canMove;
     private GameObject tempGo;
 
@@ -15,13 +13,7 @@ public class PlaygroundView : View
     private Vector3 lastShapePos;
 
 
-    public void Initialization(GameObject go)
-    {
-        tempGo = go;
 
-        lastShapePos = new Vector3((kx + 0.021f)/2f, (ky + 0.021f) / 2f);
-    }
-    
     protected override void Awake()
     {
         base.Awake();
@@ -40,7 +32,19 @@ public class PlaygroundView : View
         transform.localScale = new Vector3(kx, ky, transform.localScale.z);
         Debug.Log(kx + " " + worldScreenWidth / width + " y: " + ky + " " + worldScreenHeight / height);
     }
-    
+
+    public void Initialization()
+    {
+       
+    }
+
+    public void TestShapeInit(GameObject go)
+    {
+        tempGo = go;
+
+        lastShapePos = new Vector3((kx + 0.021f) / 2f, (ky + 0.021f) / 2f);
+    }
+        
     public void MoveTrue()
     {
         canMove = true;

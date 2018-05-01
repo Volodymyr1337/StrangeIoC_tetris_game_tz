@@ -94,7 +94,7 @@ public class EventDispatcher : Binder, IEventDispatcher, ITriggerProvider, ITrig
 				&& eventTypeText != "E_AppLateUpdate"
 				&& eventTypeText != "E_AppUpdate" )
 		{
-			UnityEngine.Debug.Log( "<size=14><color=#808000>STRANGE IOC  Dispatch: " + eventTypeText + " </color></size>" );
+			UnityEngine.Debug.Log( "<size=12><color=#808000>STRANGE IOC  Dispatch: " + eventTypeText + " </color></size>" );
 			eventTypeOld = eventTypeText;
 		}
 #endif
