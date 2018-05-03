@@ -6,7 +6,7 @@ using strange.extensions.context.impl;
 using strange.extensions.pool.api;
 using strange.extensions.pool.impl;
 using strange.framework.api;
-
+using strange.extensions.context.api;
 
 public class MainContext : MVCSContext
 {
@@ -19,10 +19,12 @@ public class MainContext : MVCSContext
         {
             injectionBinder.Bind<IPool<GameObject>>().To<Pool<GameObject>>().ToSingleton().ToName(shape);
         }
-        
-        mediationBinder.Bind<PlaygroundView>().To<PlaygroundMediator>();
 
-        commandBinder.Bind(PlaygroundEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
+        mediationBinder.Bind<GameFieldView>().To<GameFieldMediator>();
+
+
+        commandBinder.Bind(ContextEvent.START).To<CreateGameFieldCommand>().Once();
+        commandBinder.Bind(GameFieldEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
     }
 
     protected override void postBindings()

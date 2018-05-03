@@ -61,6 +61,6 @@ public class CreateShapeCommand : Command
 
         GameObject shape = randPool.GetInstance();
         
-        Dispatcher.Dispatch(PlaygroundEvent.SHAPE_CREATED, shape);
+        Dispatcher.Dispatch(GameFieldEvent.SHAPE_CREATED, shape);
     }
 }

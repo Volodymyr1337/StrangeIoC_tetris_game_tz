@@ -5,28 +5,28 @@ using strange.extensions.mediation.impl;
 using strange.extensions.pool.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 
-public class PlaygroundMediator : EventMediator
+public class GameFieldMediator : EventMediator
 {
     [Inject]
-    public PlaygroundView PlaygroundView { get; private set; }
+    public GameFieldView GameFieldView { get; private set; }
 
     public override void OnRegister()
     {
-        dispatcher.AddListener(PlaygroundEvent.SHAPE_CREATED, OnShapeCreated);
-        dispatcher.Dispatch(PlaygroundEvent.CREATE_SHAPE);
+        dispatcher.AddListener(GameFieldEvent.SHAPE_CREATED, OnShapeCreated);
+        dispatcher.Dispatch(GameFieldEvent.CREATE_SHAPE);
     }
 
     private void OnShapeCreated(IEvent evnt)
     {
         GameObject shape = evnt.data as GameObject;
-        shape.transform.parent = PlaygroundView.transform;
+        shape.transform.parent = GameFieldView.transform;
         shape.transform.localScale = Vector3.one;
-        PlaygroundView.TestShapeInit(shape);
+        GameFieldView.TestShapeInit(shape);
     }
 
     public override void OnRemove()
     {
-        dispatcher.RemoveListener(PlaygroundEvent.SHAPE_CREATED, OnShapeCreated);
+        dispatcher.RemoveListener(GameFieldEvent.SHAPE_CREATED, OnShapeCreated);
     }
 
 }

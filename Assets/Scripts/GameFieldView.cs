@@ -2,7 +2,7 @@
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
 
-public class PlaygroundView : View
+public class GameFieldView : View
 {
     
     private bool canMove;
@@ -30,6 +30,7 @@ public class PlaygroundView : View
         kx = worldScreenWidth / width;
         ky = worldScreenHeight / height;
         transform.localScale = new Vector3(kx, ky, transform.localScale.z);
+        transform.position = Vector3.zero;
         Debug.Log(kx + " " + worldScreenWidth / width + " y: " + ky + " " + worldScreenHeight / height);
     }
 

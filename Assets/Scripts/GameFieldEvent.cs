@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlaygroundEvent
+public enum GameFieldEvent
 {
     CREATE_SHAPE,
     SHAPE_CREATED
