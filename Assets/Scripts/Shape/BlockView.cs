@@ -33,14 +33,13 @@ public class BlockView : View
             return transform.parent.gameObject;
         }
     }
-    public bool CanLanded;
+    public bool CanLanded { get; private set; }
     private float ratio = 0.021f;
 
     public Vector2 currPos;
 
     public void Initialization()
     {
-        defaultPos = HeldShape.transform.position;
         correctPos = new Vector3((xFactor + ratio) / 2f, (yFactor + ratio) / 2f);
         CanLanded = true;
     }
@@ -104,9 +103,9 @@ public class BlockView : View
         callback?.Invoke();
     }
 
-    public void ResetShapePos()
+    public void ResetShapePos(GameObject shape)
     {
-        HeldShape.transform.position = defaultPos;
+        shape.transform.position = shape.transform.parent.transform.position;
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
@@ -114,8 +113,6 @@ public class BlockView : View
         if (collision.transform.tag == ShapeState.Landed.ToString())
         {
             CanLanded = false;
-            Debug.Log(collision.transform.parent.name);
-            Debug.Log(this.transform.parent.name + " can set: " + CanLanded);
         }
     }
 
@@ -132,7 +129,6 @@ public class BlockView : View
         if (collision.transform.tag == ShapeState.Landed.ToString())
         {
             CanLanded = true;
-            Debug.Log(this.transform.parent.name + " can set: " + CanLanded);
         }
     }
 }

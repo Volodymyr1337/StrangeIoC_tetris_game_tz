@@ -29,7 +29,9 @@ public class MainContext : MVCSContext
         
         commandBinder.Bind(ContextEvent.START).To<CreateGameFieldCommand>().To<SetupScreenScaleCommand>().InSequence().Once();
         commandBinder.Bind(GameFieldEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
-        commandBinder.Bind(GameFieldEvent.CREATED_SHAPE).To<InitGameFieldCommand>().Once();
+        commandBinder.Bind(GameFieldEvent.CREATED_SHAPE).To<InitGameFieldModelCommand>().Once();
+
+        commandBinder.Bind(GameFieldEvent.TRY_LANDED_SHAPE).To<TryLandShapeCommand>().Pooled();
     }
 
     protected override void postBindings()

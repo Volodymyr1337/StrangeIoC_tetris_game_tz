@@ -12,12 +12,19 @@ public class GameFieldModel
 
     public float FieldOffsetY { get; private set; }
 
-    public void Initialization(float fieldSizeX, float fieldSizeY, float fieldOffsetY, float shapeSizeX, float shapeSizeY)
+    public BlockStruct[,] FieldGrid { get; set; }
+
+    public void Initialization(float fieldSizeX, float fieldSizeY, float fieldOffsetY, float shapeSizeX, float shapeSizeY, BlockStruct[,] fieldGrid)
     {
         FieldSizeX = fieldSizeX;
         FieldSizeY = fieldSizeY;
         FieldOffsetY = fieldOffsetY;
         ShapeSizeX = shapeSizeX;
         ShapeSizeY = shapeSizeY;
+        FieldGrid = fieldGrid;
     }
+}
+public struct BlockStruct
+{
+    public GameObject Block;
 }

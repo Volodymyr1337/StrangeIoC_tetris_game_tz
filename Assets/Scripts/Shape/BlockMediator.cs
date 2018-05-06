@@ -46,21 +46,35 @@ public class BlockMediator : EventMediator
                     if (sr)
                         sr.sortingOrder = 1;
                 }
-
-                dispatcher.Dispatch(GameFieldEvent.LANDED_SHAPE, shape);
+                dispatcher.AddListener(GameFieldEvent.LANDING_FAILED, OnLandingFailed);
+                dispatcher.Dispatch(GameFieldEvent.TRY_LANDED_SHAPE, shape);                
             }
             else
             {
-                for (var i = 0; i < shape.transform.childCount; i++)
-                    shape.transform.GetChild(i).tag = ShapeState.Block.ToString();
-                BlockView.ResetShapePos();
+                FailLanding(shape);
             }
         }));
     }
 
+    private void FailLanding(GameObject shape)
+    {
+        for (var i = 0; i < shape.transform.childCount; i++)
+            shape.transform.GetChild(i).tag = ShapeState.Block.ToString();
+
+        Debug.Log("FailLanding " + shape.name);
+        BlockView.ResetShapePos(shape);
+    }
+
+    private void OnLandingFailed(IEvent evt)
+    {
+        GameObject shape = evt.data as GameObject;
+        FailLanding(shape);
+        dispatcher.RemoveListener(GameFieldEvent.LANDING_FAILED, OnLandingFailed);
+    }
+    
     public override void OnRemove()
     {
         BlockView.OnMoouseDownSignal.RemoveListener(OnMouseDownHandler);
-        BlockView.OnMoouseUpSignal.RemoveListener(OnMouseUpHandler);
+        BlockView.OnMoouseUpSignal.RemoveListener(OnMouseUpHandler);       
     }
 }

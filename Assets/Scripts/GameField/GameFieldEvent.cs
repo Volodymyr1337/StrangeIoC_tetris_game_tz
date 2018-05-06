@@ -6,5 +6,8 @@ public enum GameFieldEvent
 {
     CREATE_SHAPE,
     CREATED_SHAPE,
-    LANDED_SHAPE
+    TRY_LANDED_SHAPE,
+    LANDING_FAILED,
+    LANDED_SHAPE,
+    REMOVE_BLOCKS
 }

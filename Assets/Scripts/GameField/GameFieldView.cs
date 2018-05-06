@@ -18,7 +18,6 @@ public class GameFieldView : View
         get { return spawnPoints; }
     }
     
-
     public void Initialization()
     {
         transform.localScale = new Vector3(ScreenScaleFactor.X, ScreenScaleFactor.Y, transform.localScale.z);
@@ -36,6 +35,7 @@ public class GameFieldView : View
             {
                 shape.transform.parent = spawnPoints[i].transform;
                 shape.transform.localScale = Vector3.one;
+                shape.transform.localEulerAngles = new Vector3(0f, 0f, Random.Range(-1f, 1f) > 0f ? (Random.Range(-1f, 1f) > 0f? 0f : 180f): 90f);
                 shape.transform.position = spawnPoints[i].transform.position;
                 break;
             }            

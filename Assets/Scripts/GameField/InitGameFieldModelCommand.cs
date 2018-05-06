@@ -1,12 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using strange.extensions.command.impl;
-using strange.extensions.pool.api;
-using strange.extensions.dispatcher.eventdispatcher.api;
-using strange.extensions.context.api;
 
-public class InitGameFieldCommand : EventCommand
+public class InitGameFieldModelCommand : EventCommand
 {
     [Inject]
     public GameFieldModel GameFieldModel { get; private set; }
@@ -33,6 +28,6 @@ public class InitGameFieldCommand : EventCommand
         shapeSizeX = fieldSizeX / gridSizeX;
         shapeSizeY = fieldSizeY / gridSizeY;
 
-        GameFieldModel.Initialization(fieldSizeX, fieldSizeY, fieldBox.offset.y, shapeSizeX, shapeSizeY);
+        GameFieldModel.Initialization(fieldSizeX, fieldSizeY, fieldBox.offset.y, shapeSizeX, shapeSizeY, new BlockStruct[gridSizeX, gridSizeY]);
     }
 }
