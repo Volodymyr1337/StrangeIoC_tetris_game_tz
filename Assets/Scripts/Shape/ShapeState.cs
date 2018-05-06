@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GameFieldEvent
+public enum ShapeState
 {
-    CREATE_SHAPE,
-    SHAPE_CREATED
+    Held,
+    Landed,
+    Block
 }

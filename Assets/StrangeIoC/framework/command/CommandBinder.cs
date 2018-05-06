@@ -218,7 +218,7 @@ public class CommandBinder : Binder, ICommandBinder, IPooledCommandBinder, ITrig
 
 		if( executeCommandText != executeCommandOld )
 		{
-			UnityEngine.Debug.Log( "<size=12><color=#800080>STRANGE IOC executeCommand: " + executeCommandText + " </color></size>" );
+			//UnityEngine.Debug.Log( "<size=12><color=#800080>STRANGE IOC executeCommand: " + executeCommandText + " </color></size>" );
 			executeCommandOld = executeCommandText;
 		}
 #endif

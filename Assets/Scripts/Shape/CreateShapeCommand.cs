@@ -11,47 +11,47 @@ public class CreateShapeCommand : Command
     [Inject(ContextKeys.CONTEXT_DISPATCHER)]
     public IEventDispatcher Dispatcher { get; private set; }
 
-    [Inject(Shape.I)]
+    [Inject(ShapeType.I)]
     public IPool<GameObject> Pool_I { get; private set; }
-    [Inject(Shape.J)]
+    [Inject(ShapeType.J)]
     public IPool<GameObject> Pool_J { get; private set; }
-    [Inject(Shape.L)]
+    [Inject(ShapeType.L)]
     public IPool<GameObject> Pool_L { get; private set; }
-    [Inject(Shape.O)]
+    [Inject(ShapeType.O)]
     public IPool<GameObject> Pool_O { get; private set; }
-    [Inject(Shape.S)]
+    [Inject(ShapeType.S)]
     public IPool<GameObject> Pool_S { get; private set; }
-    [Inject(Shape.T)]
+    [Inject(ShapeType.T)]
     public IPool<GameObject> Pool_T { get; private set; }
-    [Inject(Shape.Z)]
+    [Inject(ShapeType.Z)]
     public IPool<GameObject> Pool_Z { get; private set; }
 
     public override void Execute()
     {
-        int rand = Random.Range(0, System.Enum.GetValues(typeof(Shape)).Length);
+        int rand = Random.Range(0, System.Enum.GetValues(typeof(ShapeType)).Length);
         IPool<GameObject> randPool;
 
-        switch ((Shape)rand)
+        switch ((ShapeType)rand)
         {
-            case Shape.I:
+            case ShapeType.I:
                 randPool = Pool_I;
                 break;
-            case Shape.J:
+            case ShapeType.J:
                 randPool = Pool_J;
                 break;
-            case Shape.L:
+            case ShapeType.L:
                 randPool = Pool_L;
                 break;
-            case Shape.O:
+            case ShapeType.O:
                 randPool = Pool_O;
                 break;
-            case Shape.S:
+            case ShapeType.S:
                 randPool = Pool_S;
                 break;
-            case Shape.T:
+            case ShapeType.T:
                 randPool = Pool_T;
                 break;
-            case Shape.Z:
+            case ShapeType.Z:
                 randPool = Pool_Z;
                 break;
             default:
@@ -61,6 +61,6 @@ public class CreateShapeCommand : Command
 
         GameObject shape = randPool.GetInstance();
         
-        Dispatcher.Dispatch(GameFieldEvent.SHAPE_CREATED, shape);
+        Dispatcher.Dispatch(GameFieldEvent.CREATED_SHAPE, shape);
     }
 }

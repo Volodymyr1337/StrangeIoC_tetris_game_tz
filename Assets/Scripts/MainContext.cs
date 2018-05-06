@@ -15,21 +15,26 @@ public class MainContext : MVCSContext
     
     protected override void mapBindings()
     {
-        foreach (Shape shape in Enum.GetValues(typeof(Shape)))
+
+        injectionBinder.Bind<IScaleFactor>().To<ScreenScaleFactor>().ToSingleton();
+        injectionBinder.Bind<GameFieldModel>().ToSingleton();
+
+        foreach (ShapeType shape in Enum.GetValues(typeof(ShapeType)))
         {
             injectionBinder.Bind<IPool<GameObject>>().To<Pool<GameObject>>().ToSingleton().ToName(shape);
         }
 
         mediationBinder.Bind<GameFieldView>().To<GameFieldMediator>();
-
-
-        commandBinder.Bind(ContextEvent.START).To<CreateGameFieldCommand>().Once();
+        mediationBinder.Bind<BlockView>().To<BlockMediator>();
+        
+        commandBinder.Bind(ContextEvent.START).To<CreateGameFieldCommand>().To<SetupScreenScaleCommand>().InSequence().Once();
         commandBinder.Bind(GameFieldEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
+        commandBinder.Bind(GameFieldEvent.CREATED_SHAPE).To<InitGameFieldCommand>().Once();
     }
 
     protected override void postBindings()
     {
-        foreach (Shape shape in Enum.GetValues(typeof(Shape)))
+        foreach (ShapeType shape in Enum.GetValues(typeof(ShapeType)))
         {
             IPool<GameObject> shapesPool = injectionBinder.GetInstance<IPool<GameObject>>(shape);
             shapesPool.instanceProvider = new ResourceInstanceProvider($"Shapes/{shape}", LayerMask.NameToLayer("Figure"));
