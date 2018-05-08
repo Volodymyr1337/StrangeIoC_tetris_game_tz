@@ -6,11 +6,8 @@ using strange.extensions.pool.api;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.context.api;
 
-public class CreateShapeCommand : Command
+public class CreateShapeCommand : EventCommand
 {
-    [Inject(ContextKeys.CONTEXT_DISPATCHER)]
-    public IEventDispatcher Dispatcher { get; private set; }
-
     [Inject(ShapeType.I)]
     public IPool<GameObject> Pool_I { get; private set; }
     [Inject(ShapeType.J)]
@@ -60,7 +57,7 @@ public class CreateShapeCommand : Command
         }
 
         GameObject shape = randPool.GetInstance();
-        
-        Dispatcher.Dispatch(GameFieldEvent.CREATED_SHAPE, shape);
+        dispatcher.Dispatch(GameFieldEvent.GAME_FIELD_INIT, shape);
+        dispatcher.Dispatch(GameFieldEvent.CREATED_SHAPE, shape);
     }
 }

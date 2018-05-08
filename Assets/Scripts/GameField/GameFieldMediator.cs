@@ -12,7 +12,7 @@ public class GameFieldMediator : EventMediator
 
     [Inject]
     public GameFieldModel GameFieldModel { get; private set; }
-
+        
     public override void OnRegister()
     {
         dispatcher.AddListener(GameFieldEvent.CREATED_SHAPE, OnShapeCreated);
@@ -38,8 +38,8 @@ public class GameFieldMediator : EventMediator
         int? y = evnt.data as int?;
         if (y == null)
             return;
-
-        for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(1); x++)
+        
+        for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(0); x++)
         {
             Destroy(GameFieldModel.FieldGrid[x, (int)y].Block);
         }
@@ -47,7 +47,8 @@ public class GameFieldMediator : EventMediator
 
     private void OnShapeCreated(IEvent evnt)
     {
-        GameFieldView.ShapeInit(evnt.data as GameObject);
+        GameFieldView.ShapeInit(evnt.data as GameObject, GameFieldModel.FieldGrid);
+        dispatcher.Dispatch(GameFieldEvent.CHECK_FREE_SPACE, GameFieldView.SpawnPoints);
     }
 
     public override void OnRemove()

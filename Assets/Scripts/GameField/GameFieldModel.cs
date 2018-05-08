@@ -14,6 +14,8 @@ public class GameFieldModel
 
     public BlockStruct[,] FieldGrid { get; set; }
 
+    public bool GameOver { get; set; }
+
     public void Initialization(float fieldSizeX, float fieldSizeY, float fieldOffsetY, float shapeSizeX, float shapeSizeY, BlockStruct[,] fieldGrid)
     {
         FieldSizeX = fieldSizeX;
@@ -22,6 +24,7 @@ public class GameFieldModel
         ShapeSizeX = shapeSizeX;
         ShapeSizeY = shapeSizeY;
         FieldGrid = fieldGrid;
+        GameOver = false;
     }
 }
 public struct BlockStruct

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using strange.extensions.dispatcher.eventdispatcher.api;
 using strange.extensions.mediation.impl;
+using System.Collections.Generic;
 
 public class GameFieldView : View
 {
@@ -24,7 +25,7 @@ public class GameFieldView : View
         transform.position = Vector3.zero;
     }
 
-    public void ShapeInit(GameObject shape)
+    public void ShapeInit(GameObject shape, BlockStruct[,] grid)
     {
         if (spawnPoints == null)
             return;

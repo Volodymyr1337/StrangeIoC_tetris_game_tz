@@ -16,7 +16,7 @@ public class InitGameFieldModelCommand : EventCommand
         BoxCollider2D fieldBox = fieldView.GetComponent<BoxCollider2D>();
         float fieldSizeX = fieldBox.size.x * ScreenScaleFactor.X;
         float fieldSizeY = fieldBox.size.y * ScreenScaleFactor.Y;
-
+        
         var blockSprite = shape.transform.GetComponentInChildren<SpriteRenderer>();
 
         float shapeSizeX = blockSprite.size.x * ScreenScaleFactor.X * blockSprite.transform.localScale.x;

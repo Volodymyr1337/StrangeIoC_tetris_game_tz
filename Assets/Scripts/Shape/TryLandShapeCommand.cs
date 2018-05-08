@@ -8,12 +8,9 @@ public class TryLandShapeCommand : EventCommand
     [Inject]
     public GameFieldModel GameFieldModel { get; private set; }
 
-    
     public override void Execute()
     {
         GameObject shape = evt.data as GameObject;
-
-        Debug.Log("TryLandShapeCommand: " + shape.name);
 
         Dictionary<Vector2, GameObject> blockCoords = new Dictionary<Vector2, GameObject>();
 
@@ -37,23 +34,17 @@ public class TryLandShapeCommand : EventCommand
             {
                 GameFieldModel.FieldGrid[(int)coords.Key.x, (int)coords.Key.y].Block = coords.Value;
             }
-            for(var y = 0; y < GameFieldModel.FieldGrid.GetLength(0); y++)
+            for(var y = 0; y < GameFieldModel.FieldGrid.GetLength(1); y++)
             {
                 int counter = 0;
-                for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(1); x++)
+                for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(0); x++)
                 {
                     if (GameFieldModel.FieldGrid[x,y].Block != null)
                         counter++;
                 }
 
-                if (counter == GameFieldModel.FieldGrid.GetLength(1))
+                if (counter == GameFieldModel.FieldGrid.GetLength(0))
                     dispatcher.Dispatch(GameFieldEvent.REMOVE_BLOCKS, y);
-                /*
-                for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(1); x++)
-                {
-                    GameFieldModel.FieldGrid[x, y].Block
-                }
-                */
             }
             dispatcher.Dispatch(GameFieldEvent.LANDED_SHAPE, shape);
         }

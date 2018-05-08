@@ -7,15 +7,15 @@ using strange.extensions.pool.api;
 using strange.extensions.pool.impl;
 using strange.framework.api;
 using strange.extensions.context.api;
+using strange.extensions.signal.impl;
 
 public class MainContext : MVCSContext
 {
     
     public MainContext(MonoBehaviour view) : base (view) { }
-    
-    protected override void mapBindings()
-    {
 
+    protected override void addCoreComponents()
+    {
         injectionBinder.Bind<IScaleFactor>().To<ScreenScaleFactor>().ToSingleton();
         injectionBinder.Bind<GameFieldModel>().ToSingleton();
 
@@ -24,15 +24,23 @@ public class MainContext : MVCSContext
             injectionBinder.Bind<IPool<GameObject>>().To<Pool<GameObject>>().ToSingleton().ToName(shape);
         }
 
+        base.addCoreComponents();
+    }
+
+    protected override void mapBindings()
+    {
         mediationBinder.Bind<GameFieldView>().To<GameFieldMediator>();
         mediationBinder.Bind<BlockView>().To<BlockMediator>();
         
         commandBinder.Bind(ContextEvent.START).To<CreateGameFieldCommand>().To<SetupScreenScaleCommand>().InSequence().Once();
         commandBinder.Bind(GameFieldEvent.CREATE_SHAPE).To<CreateShapeCommand>().Pooled();
-        commandBinder.Bind(GameFieldEvent.CREATED_SHAPE).To<InitGameFieldModelCommand>().Once();
-
+        commandBinder.Bind(GameFieldEvent.GAME_FIELD_INIT).To<InitGameFieldModelCommand>().Once();
+        commandBinder.Bind(GameFieldEvent.CHECK_FREE_SPACE).To<CheckFreeSpaceCommand>().Pooled();       
         commandBinder.Bind(GameFieldEvent.TRY_LANDED_SHAPE).To<TryLandShapeCommand>().Pooled();
+        commandBinder.Bind(GameFieldEvent.GAME_OVER).To<GameOverCommand>().Once();
     }
+
+
 
     protected override void postBindings()
     {

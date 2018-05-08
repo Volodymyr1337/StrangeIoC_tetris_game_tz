@@ -23,9 +23,8 @@ public class BlockView : View
     }
 
     private Vector2 correctPos;
-    private Vector2 defaultPos;
 
-    private bool move = false;
+    public bool Move = false;
     private GameObject HeldShape
     {
         get
@@ -35,9 +34,7 @@ public class BlockView : View
     }
     public bool CanLanded { get; private set; }
     private float ratio = 0.021f;
-
-    public Vector2 currPos;
-
+    
     public void Initialization()
     {
         correctPos = new Vector3((xFactor + ratio) / 2f, (yFactor + ratio) / 2f);
@@ -46,8 +43,7 @@ public class BlockView : View
 
     private void FixedUpdate()
     {
-        currPos = transform.position;
-        if (move)
+        if (Move)
         {
             Vector2 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             PositionRounding(pos);
@@ -82,7 +78,6 @@ public class BlockView : View
     {
         if (this.transform.tag == ShapeState.Block.ToString())
         {
-            move = true;
             OnMoouseDownSignal.Dispatch(HeldShape);
         }        
     }
@@ -91,7 +86,6 @@ public class BlockView : View
     {
         if (this.transform.tag == ShapeState.Held.ToString())
         {
-            move = false;
             OnMoouseUpSignal.Dispatch(HeldShape);
         }
     }

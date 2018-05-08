@@ -9,6 +9,9 @@ public class BlockMediator : EventMediator
     [Inject]
     public BlockView BlockView { get; private set; }
     
+    [Inject]
+    public GameFieldModel GameFieldModel { get; private set; }
+
     public override void OnRegister()
     {
         BlockView.Initialization();
@@ -19,7 +22,11 @@ public class BlockMediator : EventMediator
 
     private void OnMouseDownHandler(GameObject shape)
     {
-        for(var i = 0; i < shape.transform.childCount; i++)
+        if (GameFieldModel.GameOver)
+            return;
+
+        BlockView.Move = true;
+        for (var i = 0; i < shape.transform.childCount; i++)
         {
             shape.transform.GetChild(i).tag = ShapeState.Held.ToString();
         }
@@ -27,6 +34,10 @@ public class BlockMediator : EventMediator
 
     private void OnMouseUpHandler(GameObject shape)
     {
+        if (GameFieldModel.GameOver)
+            return;
+
+        BlockView.Move = false;
         BlockView.StartCoroutine(BlockView.SetCorrectShapePos(delegate ()
         {
             int blocksCanLandedCount = 0;
@@ -61,7 +72,6 @@ public class BlockMediator : EventMediator
         for (var i = 0; i < shape.transform.childCount; i++)
             shape.transform.GetChild(i).tag = ShapeState.Block.ToString();
 
-        Debug.Log("FailLanding " + shape.name);
         BlockView.ResetShapePos(shape);
     }
 
