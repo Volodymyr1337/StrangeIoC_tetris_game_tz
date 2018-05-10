@@ -35,13 +35,11 @@ public class GameFieldMediator : EventMediator
 
     private void RemoveBlocksHandler(IEvent evnt)
     {
-        int? y = evnt.data as int?;
-        if (y == null)
-            return;
+        int y = (int)evnt.data;
         
         for (var x = 0; x < GameFieldModel.FieldGrid.GetLength(0); x++)
         {
-            Destroy(GameFieldModel.FieldGrid[x, (int)y].Block);
+            Destroy(GameFieldModel.FieldGrid[x, y].Block);
         }
     }
 
